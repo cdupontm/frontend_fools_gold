@@ -1,5 +1,6 @@
 import streamlit as st
 import joblib
+import os
 
 
 import pandas as pd
@@ -12,7 +13,10 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 #opening the image
-image = Image.open('shutterstock_1797061261-1.jpg')
+app_path=os.path.dirname(__file__)
+root_path=os.path.dirname(app_path)
+image_path=os.path.join(root_path,'raw_data','shutterstock_1797061261-1.jpg')
+image = Image.open(image_path)
 
 #displaying the image on streamlit app
 st.image(image, caption='')
