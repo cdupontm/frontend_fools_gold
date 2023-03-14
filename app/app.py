@@ -142,10 +142,11 @@ scaler = joblib.load("model/scaler.pkl")
 inputs=scaler.transform(df)
 
 # joblib load the model(whatever you like)
+model_path=os.path.join(root_path,'model')
 if model_name=='Lasso':
-    model = joblib.load("model/Lasso.pkl")
+    model = joblib.load(os.path.join(model_path,'Lasso.pkl'))
 else:
-    model = joblib.load("model/DecisionTreeRegressor.pkl")
+    model = joblib.load(os.path.join(model_path,'DecisionTreeRegressor.pkl'))
 
 # model.predict(X_preproc) -> output
 gold_pred=model.predict(inputs)[0]
