@@ -9,6 +9,8 @@ import yfinance as yf
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
 
 from PIL import Image
 
@@ -20,9 +22,9 @@ image = Image.open(image_path)
 
 #displaying the image on streamlit app
 st.image(image, caption='')
-st.text("Hello and welcome")
+st.info('**Gold Price Predictions**', icon="🧠")
 
-model_name= st.sidebar.selectbox('Select a model', ( 'Decision Tree Regressor', 'Lasso'))
+model_name= st.sidebar.selectbox('Select a model', ( 'Decision Tree Regressor', 'Lasso','Sarima'))
 
 # To make a dataframe from today's price
 # Gold price (target)
@@ -145,15 +147,26 @@ inputs=scaler.transform(df)
 model_path=os.path.join(root_path,'model')
 if model_name=='Lasso':
     model = joblib.load(os.path.join(model_path,'Lasso.pkl'))
+    gold_pred=model.predict(inputs)[0]
+    gold_pred=round(gold_pred,1)
+elif model_name=='Sarima':
+    model = joblib.load(os.path.join(model_path,'sarima.pkl'))
+    results = model.get_forecast(1, alpha=0.05)
+    gold_pred = (round(np.exp(results.predicted_mean),1)).iloc[0]
+    confidence_int = results.conf_int()
 else:
     model = joblib.load(os.path.join(model_path,'DecisionTreeRegressor.pkl'))
+    gold_pred=model.predict(inputs)[0]
+    gold_pred=round(gold_pred,1)
 
 # model.predict(X_preproc) -> output
-gold_pred=model.predict(inputs)[0]
-gold_pred=round(gold_pred,1)
+#gold_pred=model.predict(inputs)[0]
+#gold_pred=round(gold_pred,1)
 
-st.text("Input Data")
-st.table(df)
+st.write("**Features**")
+st.write(df)
+
+
 
 gold_price=round(df['Adj Close gold'][0],2)
 
@@ -164,12 +177,8 @@ col1, col2 = st.columns(2)
 col1.metric("Gold Price", gold_price)
 col2.metric("Gold Prediction", gold_pred, f'{pct_change}%')
 
-#st.dataframe(df.iloc[:,0:5])
-#st.dataframe(df.iloc[:,5:10])
-
 st.text(model)
-st.text("Past performance is not necessarily indicative of future results.")
-st.text("All investments carry significant risk.")
-st.text("All investment decisions of an individual remain the specific responsibility of that individual")
 
-st.write(df)
+st.info('**All investments carry significant risk.**')
+st.text("Past performance is not necessarily indicative of future results.")
+st.text("All investment decisions of an individual remain the specific responsibility of that individual")
