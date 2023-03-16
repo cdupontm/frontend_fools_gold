@@ -168,4 +168,8 @@ col2.metric("Gold Prediction", gold_pred, f'{pct_change}%')
 #st.dataframe(df.iloc[:,5:10])
 
 st.text(model)
-st.text("Past performance is not necessarily indicative of future results. All investments carry significant risk and all investment decisions of an individual remain the specific responsibility of that individual")
+st.text("Past performance is not necessarily indicative of future results.")
+st.text("All investments carry significant risk.")
+st.text("All investment decisions of an individual remain the specific responsibility of that individual")
+
+st.write(df)
