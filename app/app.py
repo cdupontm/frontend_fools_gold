@@ -14,14 +14,22 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 from PIL import Image
 
+# Confit
+st.set_page_config(page_title='Gold Price Prediction Tool', page_icon=':bar_chart:', layout='wide')
+
+
 #opening the image
 app_path=os.path.dirname(__file__)
 root_path=os.path.dirname(app_path)
-image_path=os.path.join(root_path,'raw_data','shutterstock_1797061261-1.jpg')
+#image_path=os.path.join(root_path,'raw_data','shutterstock_1797061261-1.jpg')
+image_path=os.path.join(root_path,'raw_data','gold_banner.jpg')
 image = Image.open(image_path)
+gold_banner = image.resize((1200, 200))
 
-#displaying the image on streamlit app
-st.image(image, caption='')
+
+
+
+st.image(gold_banner, caption='')
 st.info('**Gold Price Predictions**', icon="🧠")
 
 model_name= st.sidebar.selectbox('Select a model', ( 'Decision Tree Regressor', 'Lasso','Sarima'))
@@ -164,9 +172,10 @@ else:
 #gold_pred=round(gold_pred,1)
 
 st.write("**Features**")
-st.write(df)
+#st.write(df.round(2))
 
-
+test=df.round(1)
+st.write(test)
 
 gold_price=round(df['Adj Close gold'][0],2)
 
@@ -179,6 +188,8 @@ col2.metric("Gold Prediction", gold_pred, f'{pct_change}%')
 
 st.text(model)
 
-st.info('**All investments carry significant risk.**')
-st.text("Past performance is not necessarily indicative of future results.")
-st.text("All investment decisions of an individual remain the specific responsibility of that individual")
+st.info('Disclaimer: **All investments carry significant risk.**')
+#st.text("Past performance is not necessarily indicative of future results.")
+#st.text("All investment decisions of an individual remain the specific responsibility of that individual")
+
+df_gold = pd.DataFrame(yf.download('GC=F', period = 10))
