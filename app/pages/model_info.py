@@ -62,10 +62,18 @@ elif model_name=='Lasso':
 
 
 elif model_name=='Sarima':
-    model = joblib.load(os.path.join(model_path,'sarima.pkl'))
-    results = model.get_forecast(1, alpha=0.05)
-    gold_pred = (round(np.exp(results.predicted_mean),1)).iloc[0]
-    confidence_int = results.conf_int()
+    pnl_path=os.path.join(root_path,'raw_data','SarimaPnL.png')
+    test_path=os.path.join(root_path,'raw_data','SarimaTest.png')
+    pnl= Image.open(pnl_path)
+    pnl = pnl.resize((600, 400))
+    test= Image.open(test_path)
+    test = test.resize((600, 400))
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(test, caption='')
+    with col2:
+        st.image(pnl, caption='')
 
 elif model_name=='RandomForest':
     pnl_path=os.path.join(root_path,'raw_data','RandomForestPnL.png')

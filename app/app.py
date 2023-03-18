@@ -176,8 +176,8 @@ st.write("**Features**")
 
 test=df.round(2)
 test.columns = test.columns.str.replace('Adj Close','')
-test1=test.iloc[:, : 12]
-test2=test.iloc[:,12 :]
+test1=test.iloc[:, : 15]
+test2=test.iloc[:,13 :]
 st.write(test1)
 #st.write(test2)
 
