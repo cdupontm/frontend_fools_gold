@@ -21,7 +21,7 @@ root_path=os.path.dirname(root_path)
 
 banner_path=os.path.join(root_path,'raw_data','banner.jpg')
 banner = Image.open(banner_path)
-new_banner = banner.resize((1200, 150))
+new_banner = banner.resize((1400, 150))
 
 st.image(new_banner, caption='')
 st.info('**Model Statistics**', icon="🧠")
