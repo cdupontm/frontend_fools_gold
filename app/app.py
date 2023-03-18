@@ -24,7 +24,7 @@ root_path=os.path.dirname(app_path)
 #image_path=os.path.join(root_path,'raw_data','shutterstock_1797061261-1.jpg')
 image_path=os.path.join(root_path,'raw_data','gold_banner.jpg')
 image = Image.open(image_path)
-gold_banner = image.resize((1200, 200))
+gold_banner = image.resize((1600, 200))
 
 
 
