@@ -174,17 +174,24 @@ else:
 st.write("**Features**")
 #st.write(df.round(2))
 
-test=df.round(1)
-st.write(test)
+test=df.round(2)
+test.columns = test.columns.str.replace('Adj Close','')
+test1=test.iloc[:, : 12]
+test2=test.iloc[:,12 :]
+st.write(test1)
+#st.write(test2)
 
 gold_price=round(df['Adj Close gold'][0],2)
 
 pct_change=round((gold_pred/gold_price-1)*100,2)
 
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 col1.metric("Gold Price", gold_price)
 col2.metric("Gold Prediction", gold_pred, f'{pct_change}%')
+with col3:
+        st.image("https://media.giphy.com/media/3ohzdIuqJoo8QdKlnW/giphy.gif",width=300)
+
 
 st.text(model)
 
