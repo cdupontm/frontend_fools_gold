@@ -252,8 +252,8 @@ elif model_name=='Sarima':
     gold_pred = (round(np.exp(results.predicted_mean),1)).iloc[0]
     confidence_int = results.conf_int()
 elif model_name=='XGBoost':
-    #model = joblib.load(os.path.join(model_path,'best_xgb_fit.pkl'))
-    model = joblib.load(os.path.join(model_path,'lasso_clf_feat.pkl'))
+    model = joblib.load(os.path.join(model_path,'best_xgb_fit.pkl'))
+    #model = joblib.load(os.path.join(model_path,'lasso_clf_feat.pkl'))
     g=model.predict(inputs_new)
     pred=np.column_stack((g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g))
     gold_pred = round(scaler.inverse_transform(pred)[0][0],1)
