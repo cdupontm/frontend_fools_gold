@@ -6,4 +6,4 @@ scikit-learn
 matplotlib
 statsmodels
 ta
-xgboost
+xgboost==1.6.2
