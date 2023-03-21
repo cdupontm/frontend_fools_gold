@@ -203,5 +203,50 @@ df = df_new_feat.dropna(how='any')
 
 df = df.drop(['Adj Close IRX', 'Adj Close EUR/USD','Adj Close USD/JPY','Adj Close USD/CHF'], axis=1)
 
-
 st.write(df)
+
+df_today=df.tail(1)
+
+st.write(df_today)
+
+
+
+
+# joblib load the scaler
+scaler = joblib.load("model/scaler_sam.pkl")
+
+# scaler transform the raw data -> your X_preproc
+inputs_new=scaler.transform(df_today)
+
+model_name= st.sidebar.selectbox('Select a model', ('XGBoost','RandomForest', 'Lasso','Sarima'))
+
+app_path=os.path.dirname(__file__)
+root_path=os.path.dirname(app_path)
+root_path=os.path.dirname(root_path)
+
+
+# joblib load the model(whatever you like)
+model_path=os.path.join(root_path,'model')
+if model_name=='Lasso':
+    model = joblib.load(os.path.join(model_path,'lasso_clf_feat.pkl'))
+    g=model.predict(inputs_new)
+    pred=np.column_stack((g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g))
+    gold_pred = round(scaler.inverse_transform(pred)[0][0],1)
+elif model_name=='Sarima':
+    model = joblib.load(os.path.join(model_path,'sarima.pkl'))
+    results = model.get_forecast(1, alpha=0.05)
+    gold_pred = (round(np.exp(results.predicted_mean),1)).iloc[0]
+    confidence_int = results.conf_int()
+elif model_name=='XGBoost':
+    model = joblib.load(os.path.join(model_path,'best_xgb_fit.pkl'))
+    g=model.predict(inputs_new)
+    pred=np.column_stack((g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g))
+    gold_pred = round(scaler.inverse_transform(pred)[0][0],1)
+else:
+    model = joblib.load(os.path.join(model_path,'random_forest_clf_feat.pkl'))
+    g=model.predict(inputs_new)
+    pred=np.column_stack((g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g))
+    gold_pred = round(scaler.inverse_transform(pred)[0][0],1)
+
+
+st.write(gold_pred)
