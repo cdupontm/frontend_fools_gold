@@ -43,6 +43,7 @@ if model_name=='XGBoost':
         st.image(test, caption='')
     with col2:
         st.image(pnl, caption='')
+    st.write("XGBoost works by training a number of decision trees (flowcharts of series of related events) that explain the test target values. The predictions of each tree are combined to form the final prediction.")
 
     #st.image(features, caption='')
 
@@ -59,6 +60,7 @@ elif model_name=='Lasso':
         st.image(test, caption='')
     with col2:
         st.image(pnl, caption='')
+    st.write("Lasso is a regularization technique which shrinks data around a central mean. Lasso can also automate certain parts of model selection, like variable selection/parameter elimination.")
 
 
 elif model_name=='Sarima':
@@ -74,6 +76,7 @@ elif model_name=='Sarima':
         st.image(test, caption='')
     with col2:
         st.image(pnl, caption='')
+    st.write("Sarima only looks at the historical price of gold to predict the future price.")
 
 elif model_name=='RandomForest':
     pnl_path=os.path.join(root_path,'raw_data','RandomForestPnL.png')
@@ -88,6 +91,7 @@ elif model_name=='RandomForest':
         st.image(test, caption='')
     with col2:
         st.image(pnl, caption='')
+    st.write("RandomForest takes a random subset of features when forming a decision tree (flowcharts of series of related events) and only had access to a random set of the training data points.")
 
 
 st.info("Past performance is not necessarily indicative of future results.")

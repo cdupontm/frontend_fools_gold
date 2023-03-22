@@ -312,7 +312,7 @@ with col3:
         st.image("https://media.giphy.com/media/3ohzdIuqJoo8QdKlnW/giphy.gif",width=300)
 
 
-st.text(model)
+st.write(model_name)
 
 st.info('Disclaimer: **All investments carry significant risk.**')
 #st.text("Past performance is not necessarily indicative of future results.")
