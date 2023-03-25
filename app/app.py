@@ -304,10 +304,12 @@ gold_price=round(df_today['Adj Close gold'][0],2)
 
 pct_change=round((gold_pred/gold_price-1)*100,2)
 
+gold_pred2=(int(10*gold_pred-0.5)+1) / 10.0
+#st.write(gold_pred2)
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Gold Price", gold_price)
-col2.metric("Gold Prediction", gold_pred, f'{pct_change}%')
+col2.metric("Gold Prediction", gold_pred2, f'{pct_change}%')
 with col3:
         st.image("https://media.giphy.com/media/3ohzdIuqJoo8QdKlnW/giphy.gif",width=300)
 
